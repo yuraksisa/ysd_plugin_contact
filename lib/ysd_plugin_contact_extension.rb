@@ -6,6 +6,22 @@ require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
 module Huasi
 
   class ContactExtension < Plugins::ViewListener
+
+    # ========= Page Building ============
+    
+    #
+    # It gets the scripts used by the module
+    #
+    # @param [Context]
+    #
+    # @return [Array]
+    #   An array which contains the css resources used by the module
+    #
+    def page_script(context={})
+    
+      ["/js/ysd.forms.js"]    
+    
+    end
              
     # ========= Routes ===================
     
