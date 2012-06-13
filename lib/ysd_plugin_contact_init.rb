@@ -8,6 +8,7 @@ Plugins::SinatraAppPlugin.register :contact do
    description= 'Integrate the contact application'
    version=     '0.1'
    sinatra_extension Sinatra::YSD::Contacte
+   sinatra_extension Sinatra::YSD::ContacteRESTApi
    hooker            Huasi::ContactExtension
   
 end
