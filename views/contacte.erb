@@ -1,0 +1,209 @@
+             <h2><%= t.contacteform.title %></h2>
+             <% if options.show_wellcome %>
+             <p><%= t.contacteform.header %></p>
+             <% end %>
+
+             <form id="contacte" method="post" action="/contact" encoded="application-www-form-urlencoded">
+			    <div class="formrow">
+  				  <label for="mail[sender_name]" class="fieldtitle"><%= t.contacteform.name %></label>
+  				  <input type="text" id="mail[sender_name]" name="mail[sender_name]" class="fieldcontrol"/>
+  				</div>
+  				<% if options.show_company %>
+  				<div class="formrow">
+  				  <label for="mail[sender_company]" class="fieldtitle"><%= t.contacteform.company_name %></label>
+  				  <input type="text" id="mail[sender_company]" name="mail[sender_company]" class="fieldcontrol"/>
+  				</div>
+  				<% end %>
+  				<div class="formrow">
+  				  <label for="mail[sender_email]" class="fieldtitle"><%= t.contacteform.email %></label>
+  				  <input type="text" id="mail[sender_email]" name="mail[sender_email]" class="fieldcontrol"/>
+  				</div>
+  				<div class="formrow">
+  				  <label for="mail[message]" class="fieldtitle"><%= t.contacteform.message %></label>
+  				  <textarea id="mail[message]" name="mail[message]" rows="5" class="fieldcontrol"></textarea>
+  				</div>
+                <p style="text-align:right"> <span id="mail_message_comments_length"></span> <%= t.contacteform.message_available_chars %> </p>
+  				<div class="formrow formrow-botonera">
+  				  <input type="submit" id="send" name="send" value="<%= t.contacteform.send_button %>"/>  				
+                </div>
+                <input type="hidden" id="mail[mailbox][address]" name="mail[mailbox][address]" value="<%= options.mailbox %>"/>
+                <input type="hidden" id="mail[subject]" name="mail[subject]" value="contact form"/>
+                <input type="hidden" id="mail[folder]" name="mail[folder]" value="in"/>
+			</form>	
+		
+		    <% if options.show_email %>
+			<p><%= t.contacteform.footer %>: <a href="mailto:<%= options.email %>" class="email"><%= options.email %></a></p>
+            <% end %>
+
+            <script type="text/javascript">
+            
+            
+              var contactModel = {
+               
+                state : 'starting',
+               
+                post_contact : function (request) {
+       	           
+                   var json_request = encodeURIComponent(JSON.stringify(request));
+               	   var the_url =  document.forms['contacte'].action;
+               	                   	        
+       	           $.ajax( 
+       	             {
+       	               type : 'POST',
+       	               url : the_url ,
+       	               data : json_request,
+                       dataType: 'html',  /* Response expected from the server */
+                       contentType: 'application/json; charset=utf-8', /* Data type sent to the server */
+       	                  	           
+       	               success : function(data, textStatus, jqXHR) { /* RESPONSE OK */
+       	             
+       	                 contactModel.change_state('contact_response_ok'); 
+       	             
+       	               },	
+       	           
+       	               error: function(jqXHR, textStatus, errorThrow){ /* RESPONSE ERROR */
+       	           	
+       	           	     contactModel.change_state('contact_response_error'); 
+       	             
+       	               },
+       	           
+       	             }
+       	          );       
+       	        
+       	
+               },
+               
+               change_state : function (action) {
+               	
+               	switch (action) {
+               		
+               	  case 'contact_response_ok' :
+               	  
+               	    this.state = 'process_completed';
+               	  
+               	    break;
+               	  
+               	  case 'contact_response_error' :
+               	  
+               	    this.state = 'process_error';
+               	    break; 
+               		
+               	}
+               	
+               	contactView.state_changed(this.state);
+               	 
+               	
+               } 
+    	
+       
+              };            
+       
+              
+              var contactController = {
+              	
+              	post_contact : function(data) {
+              	
+              	  contactModel.post_contact(data);
+              	  	
+              	},
+              	
+              	process_completed_close : function () {
+              	  document.getElementById('contacte').reset();	
+              	},
+              	
+              	process_error_close : function() {
+              		
+              	}
+              	
+              };
+           
+            
+              var contactView = {
+              	
+              	init : function() {
+              	
+              	  YsdForms.limit_text_area_content_size(document.getElementById('mail[message]'),256,
+              	     function (content_remain) {
+                       document.getElementById('mail_message_comments_length').innerHTML = '<strong>' + content_remain + '</strong>';
+                     }
+                   );
+              	
+              	  // Validations
+              	  $("#contacte").validate(
+                  {
+                 	debug: true,
+                 	
+                 	submitHandler: 
+                 	   function(form) {
+                 	   	 //form.submit();
+                 	   	 contactController.post_contact($(form).formParams(false));                 	   	 
+                 	   },
+         
+                    rules: {
+                       'mail[sender_name]': "required",
+                       'mail[sender_email]': {
+                       	  required: true,
+                       	  email: true
+                       },
+                       'mail[message]': "required"  	
+                    },
+         
+                    messages: {
+                       'mail[sender_name]': "<%= t.mail_model.sender_name_required %>",
+                       'mail[sender_email]': {
+                       	  required: "<%= t.mail_model.sender_required %>",
+                       	  email: "<%= t.mail_model.sender_email %>"
+                       },
+                       'mail[message]': "<%= t.mail_model.message_required %>"	
+                    }   	
+                  }
+                  );
+              		
+              		
+              	},
+              	
+              	state_changed : function(state) {
+              	
+              	  switch (state) {
+              	  
+              	    case 'process_completed' :
+              	    
+       	              $('<div title="<%= t.contacteform.request_received_ok_title%>"> <%= t.contacteform.request_received_ok_description%> </div>').dialog( 
+       	               { height: 160, 
+       	                 modal: true,     	 
+       	                 buttons: {
+       	                   Ok: function() {
+				   	         $( this ).dialog( "close" );
+		       	             contactController.process_completed_close();
+				           }
+				         }
+           	           });
+              	      
+              	    
+              	      break;
+              	      
+              	    case 'process_error' :
+              	    
+                      $('<div title="<%= t.contacteform.request_received_error_title%>"> <%= t.contacteform.request_received_error_description%> </div>').dialog( 
+                       { height: 160, 
+                         modal: true,     	 
+       	                 buttons: {
+       	                   Ok: function() {
+				   	         $( this ).dialog( "close" );
+				           }
+				         }
+           	          });       	           	  
+              	    
+              	    
+              	      break;
+              	  	
+              	  }
+              		
+              	}
+              	
+              };
+              
+              contactView.init();
+            
+            
+            </script>

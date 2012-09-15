@@ -9,6 +9,6 @@ Gem::Specification.new do |s|
   s.summary = "Contact integration"
   
   s.add_runtime_dependency "ysd_core_plugins"
-  s.add_runtime_dependency "ysd_mw_contact"
+  s.add_runtime_dependency "ysd_md_mail"
   
 end

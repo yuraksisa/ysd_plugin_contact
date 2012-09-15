@@ -1,3 +1,19 @@
-forum_admin_menu:
-  forum_menu: Foros
-  forum_management: Foro
+contacteform:
+  title: Contacto
+  header: Puedes ponerte en contacto rellenando este formulario
+  name: Nombre y apellidos *
+  company_name: Nombre de la empresa
+  email: Email *
+  message: Mensaje *
+  send_button: Enviar
+  footer: También puedes enviar un correo electrónico a
+  request_received_ok_title: Proceso realizado
+  request_received_ok_description: La operación se ha realizado correctamente. En breve nos pondremos en contacto con usted.
+  request_received_error_title: Error en el proceso
+  request_received_error_description: Se ha producido un error al atender su solicitud.
+  message_available_chars: caracteres disponibles
+mail_model:  
+  sender_name_required: Por favor, introduzca su nombre y apellidos
+  sender_required: Necesitamos la dirección de correo electrónico para ponernos en contacto 
+  sender_email: El formato de la dirección de correo electrónico es name@domain.com
+  message_required: Por favor, introduzca el mensaje
