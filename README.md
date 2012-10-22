@@ -1,1 +1,5 @@
-Defines the /contact route and the contacte aspect
+Defines :
+
+- the /contact route 
+
+- the contact aspect

@@ -1,0 +1,14 @@
+<div class="contact_template">
+  <div class="content_data_block">
+    <h3 class="content_data_block_title"><%= t.content.content_contact.description %></h3> 
+    <% if (element.contact_phone_number and element.contact_phone_number.to_s.strip.length > 0) or (element.contact_mobile and element.contact_mobile.to_s.strip.length > 0) %>  
+    <div class="content_data_row"><span class="content_data_label"><%= t.contact.phone_number %></span>&nbsp;<%= "#{element.contact_phone_number} #{element.contact_mobile}" %></div>
+    <% end %>
+    <% if element.contact_email and element.contact_email.to_s.strip.length > 0 %>  
+    <div class="content_data_row"><span class="content_data_label"><%= t.contact.email %></span>&nbsp;<%= "#{element.contact_email}" %></div>
+    <% end %>
+    <% if element.contact_website and element.contact_website.to_s.strip.length > 0 %>  
+    <div class="content_data_row"><span class="content_data_label"><%= t.contact.website %></span>&nbsp;<a href="<%="#{element.contact_website}"%>"><%="#{element.contact_website}"%></a></div>
+    <% end %>
+  </div>
+</div>

@@ -15,7 +15,7 @@ module Huasi
     
       app = context[:app]
       
-      renderer = UIFieldSetRender::FieldSetRender.new('contact', app)
+      renderer = UI::FieldSetRender.new('contact', app)
       renderer.render('view','',{:element => element})
     
     end    
@@ -46,7 +46,7 @@ module Huasi
       
       app = context[:app]
       
-      renderer = UIFieldSetRender::FieldSetRender.new('contact', app)      
+      renderer = UI::FieldSetRender.new('contact', app)      
       contact_form = renderer.render('form', 'em')    
       
     end
@@ -67,7 +67,7 @@ module Huasi
     
        app = context[:app]
     
-       renderer = UIFieldSetRender::FieldSetRender.new('contact', app)      
+       renderer = UI::FieldSetRender.new('contact', app)      
        contact_template = renderer.render('view', 'em')
                 
     end

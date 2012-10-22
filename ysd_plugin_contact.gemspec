@@ -10,5 +10,7 @@ Gem::Specification.new do |s|
   
   s.add_runtime_dependency "ysd_core_plugins"
   s.add_runtime_dependency "ysd_md_mail"
-  
+  s.add_runtime_dependency "ysd_md_fieldset"
+  s.add_runtime_dependency "ysd_plugin_yito_ui"
+      
 end
