@@ -1,19 +1,28 @@
 contacteform:
   title: Contact
-  header: You can contact with me using this form
-  name: Name and surname *
+  header: You can contact me filling this form
+  name: Name *
   company_name: Company name
   email: Email *
   message: Message *
   send_button: Send
-  footer: You can also send an email to
   request_received_ok_title: Process done
   request_received_ok_description: The process has been done. We will contact you soon.
   request_received_error_title: Error in the process
   request_received_error_description: There has been an error in the process. Please, try it again.  
   message_available_chars: available characters
 mail_model:  
-  sender_name_required: Please input name and surname
-  sender_required: We need your email address to contact you
+  sender_name_required: Please type your full name
+  sender_required: Please type your email address
   sender_email: The email address format is name@domain.com
-  message_required: Please input the message
+  message_required: Please type the message
+contact:
+  website: Web site
+  email: Email
+  phone_number: Phone number
+  mobile: Mobile phone
+content:
+  content_contact:
+    description: Contact
+aspect:
+  contact: Contact

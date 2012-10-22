@@ -1,6 +1,6 @@
              <h2><%= t.contacteform.title %></h2>
-             <% if options.show_wellcome %>
-             <p><%= t.contacteform.header %></p>
+             <% if welcome_message.strip.length > 0 %>
+             <p><%= welcome_message %></p>
              <% end %>
 
              <form id="contacte" method="post" action="/contact" encoded="application-www-form-urlencoded">
@@ -8,7 +8,7 @@
   				  <label for="mail[sender_name]" class="fieldtitle"><%= t.contacteform.name %></label>
   				  <input type="text" id="mail[sender_name]" name="mail[sender_name]" class="fieldcontrol"/>
   				</div>
-  				<% if options.show_company %>
+  				<% if show_company %>
   				<div class="formrow">
   				  <label for="mail[sender_company]" class="fieldtitle"><%= t.contacteform.company_name %></label>
   				  <input type="text" id="mail[sender_company]" name="mail[sender_company]" class="fieldcontrol"/>
@@ -26,15 +26,22 @@
   				<div class="formrow formrow-botonera">
   				  <input type="submit" id="send" name="send" value="<%= t.contacteform.send_button %>"/>  				
                 </div>
-                <input type="hidden" id="mail[mailbox][address]" name="mail[mailbox][address]" value="<%= options.mailbox %>"/>
+                <input type="hidden" id="mail[mailbox][address]" name="mail[mailbox][address]" value="<%= mailbox %>"/>
                 <input type="hidden" id="mail[subject]" name="mail[subject]" value="contact form"/>
                 <input type="hidden" id="mail[folder]" name="mail[folder]" value="in"/>
 			</form>	
-		
-		    <% if options.show_email %>
-			<p><%= t.contacteform.footer %>: <a href="mailto:<%= options.email %>" class="email"><%= options.email %></a></p>
+		    
+		    <% if email.strip.length > 0 or phone_number.strip.length > 0 %>
+		      <div class="contact_information">
+		        <% if email.strip.length > 0 %>
+			      <span class="email"><a href="mailto:<%= email %>" class="email_link"><%= email %></a></span>
+                <% end %>
+                <% if phone_number.strip.length > 0 %>
+                  <span class="phone_number"><%= phone_number %></span>
+                <% end %>
+              </div>
             <% end %>
-
+ 
             <script type="text/javascript">
             
             

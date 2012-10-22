@@ -14,14 +14,7 @@ module Sinatra
     module Contacte
     
       def self.registered(app)
-          
-        # Configuration
-        app.set :show_wellcome, true
-        app.set :show_company, true
-        app.set :show_email, true
-        app.set :email, ''
-        app.set :mailbox, 'contact'
-                
+                          
         # Add the local folders to the views and translations     
         app.settings.views = Array(app.settings.views).push(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'views')))
         app.settings.translations = Array(app.settings.translations).push(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'i18n')))       
@@ -30,7 +23,22 @@ module Sinatra
         # Show the contact form
         #
         app.get "/contact" do  
-          load_page('contacte')
+          
+          welcome_message = t.contacteform.header
+          
+          locals = { :mailbox => SystemConfiguration::Variable.get_value('contact.mailbox'),
+                     :show_company => SystemConfiguration::Variable.get_value('contact.show_company').to_s.to_bool,
+                     :email => SystemConfiguration::Variable.get_value('contact.email',''),
+                     :phone_number => SystemConfiguration::Variable.get_value('contact.phone_number','') }
+          
+          if SystemConfiguration::Variable.get_value('contact.show_welcome').to_s.to_bool
+            locals.store(:welcome_message, welcome_message)
+          else
+            locals.store(:welcome_message, '')
+          end
+                    
+          load_page('contacte', :locals => locals)
+          
         end
           
         #

@@ -6,7 +6,6 @@ contacteform:
   email: Email *
   message: Missatge *
   send_button: Enviar
-  footer: També pots enviar un correu electrònic a
   request_received_ok_title: Procés realitzat
   request_received_ok_description: L\'operació s\'ha realitzat correctament. Ens posarem en contacte amb vosté.
   request_received_error_title: Error en el procés
@@ -14,6 +13,16 @@ contacteform:
   message_available_chars: caràcters disponibles
 mail_model:  
   sender_name_required: Si us plau, informi el seu nom i cognoms
-  sender_required: Necessitem l\'adreça de correu electrònic per contactar 
+  sender_required: Si us plau, informi l\'adreça de correu electrònic
   sender_email: El format de l\'adreça de correu electrònic és name@domain.com
   message_required: Si us plau, introdueixi el missatge
+contact:
+  website: Web
+  email: Email
+  phone_number: Telèfon
+  mobile: Telèfon mòbil
+content:
+  content_contact:
+    description: Contacte
+aspect:
+  contact: Contacte

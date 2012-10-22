@@ -7,21 +7,30 @@ module Huasi
 
   class ContactExtension < Plugins::ViewListener
 
-    # ========= Page Building ============
-    
+    # ========= Installation =================
+
+    # 
+    # Install the plugin
     #
-    # It gets the scripts used by the module
-    #
-    # @param [Context]
-    #
-    # @return [Array]
-    #   An array which contains the css resources used by the module
-    #
-    def page_script(context={})
-    
-      ["/js/ysd.forms.js"]    
-    
-    end
+    def install(context={})
+            
+        SystemConfiguration::Variable.first_or_create({:name => 'contact.show_company'}, 
+                                                      {:value => 'false', :description => 'show the company input field (values true or false)', :module => :contact}) 
+
+        SystemConfiguration::Variable.first_or_create({:name => 'contact.show_welcome'}, 
+                                                      {:value => 'false', :description => 'show the welcome message (values true or false)', :module => :contact}) 
+
+        SystemConfiguration::Variable.first_or_create({:name => 'contact.email'}, 
+                                                      {:value => '', :description => 'The email address', :module => :contact}) 
+
+        SystemConfiguration::Variable.first_or_create({:name => 'contact.phone_number'}, 
+                                                      {:value => '', :description => 'The phone number', :module => :contact}) 
+
+        SystemConfiguration::Variable.first_or_create({:name => 'contact.mailbox'}, 
+                                                      {:value => 'admin', :description => 'mail box where messages are post', :module => :contact}) 
+
+
+    end    
              
     # ========= Routes ===================
     
@@ -40,6 +49,24 @@ module Huasi
                  :module => :contact}]
     
     end
+    
+    # ========= Aspects ==================
+    
+    #
+    # Retrieve an array of the aspects defined in the plugin
+    #
+    # The attachment aspect (complement)
+    #
+    def aspects(context={})
+      
+      app = context[:app]
+      
+      aspects = []
+      aspects << ::Plugins::Aspect.new(:contact, app.t.aspect.contact, [:entity], ContactAspectDelegate.new)
+                                               
+      return aspects
+       
+    end     
   
   end #ContactExtension
 end #Huasi
