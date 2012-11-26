@@ -1,4 +1,5 @@
 require 'ysd-plugins_viewlistener' unless defined?Plugins::ViewListener
+require 'ysd_md_fieldset_contact'
 
 #
 # Forum Extension
@@ -62,7 +63,7 @@ module Huasi
       app = context[:app]
       
       aspects = []
-      aspects << ::Plugins::Aspect.new(:contact, app.t.aspect.contact, [:entity], ContactAspectDelegate.new)
+      aspects << ::Plugins::Aspect.new(:contact, app.t.aspect.contact, FieldSet::Contact, ContactAspectDelegate.new)
                                                
       return aspects
        
