@@ -17,9 +17,14 @@ module Huasi
     
       app = context[:app]
       
-      renderer = ::UI::FieldSetRender.new('contact', app)
-      renderer.render('view','',{:element => element})
-    
+      if element.contact_website.empty? and element.contact_email.empty? and element.contact_phone_number.empty? and
+         element.contact_mobile.empty?
+        ''
+      else
+        renderer = ::UI::FieldSetRender.new('contact', app)
+        renderer.render('view','',{:element => element})
+      end
+      
     end    
 
     # ========= Entity Management extension ========= 

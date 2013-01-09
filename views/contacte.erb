@@ -1,9 +1,9 @@
-             <h2><%= t.contacteform.title %></h2>
-             <% if welcome_message.strip.length > 0 %>
-             <p><%= welcome_message %></p>
-             <% end %>
+      <h2><%= t.contacteform.title %></h2>
+         <% if welcome_message.strip.length > 0 %>
+          <p><%= welcome_message %></p>
+         <% end %>
 
-             <form id="contacte" method="post" action="/contact" encoded="application-www-form-urlencoded">
+      <form id="contacte" method="post" action="/contact" encoded="application-www-form-urlencoded">
 			    <div class="formrow">
   				  <label for="mail[sender_name]" class="fieldtitle"><%= t.contacteform.name %></label>
   				  <input type="text" id="mail[sender_name]" name="mail[sender_name]" class="fieldcontrol"/>
@@ -44,7 +44,8 @@
  
             <script type="text/javascript">
             
-            
+            require(['jquery','YSDForms', 'YSDjson2', 'jquery.ui', 'jquery.validate', 'jquery.formparams'],function($, YSDForms){
+
               var contactModel = {
                
                 state : 'starting',
@@ -129,7 +130,7 @@
               	
               	init : function() {
               	
-              	  YsdForms.limit_text_area_content_size(document.getElementById('mail[message]'),256,
+              	  YSDForms.limit_text_area_content_size(document.getElementById('mail[message]'),256,
               	     function (content_remain) {
                        document.getElementById('mail_message_comments_length').innerHTML = '<strong>' + content_remain + '</strong>';
                      }
@@ -212,5 +213,6 @@
               
               contactView.init();
             
+            });
             
             </script>
