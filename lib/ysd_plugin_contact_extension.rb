@@ -63,7 +63,8 @@ module Huasi
       app = context[:app]
       
       aspects = []
-      aspects << ::Plugins::Aspect.new(:contact, app.t.aspect.contact, FieldSet::Contact, ContactAspectDelegate.new)
+      aspects << ::Plugins::Aspect.new(:contact, app.t.aspect.contact, FieldSet::Contact, ContactAspectDelegate.new,
+                 [Plugins::AspectConfigurationAttribute.new(:style_class, 'Style class')])
                                                
       return aspects
        

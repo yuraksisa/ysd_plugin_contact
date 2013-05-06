@@ -17,15 +17,32 @@ module Huasi
     
       app = context[:app]
       
-      if element.contact_website.empty? and element.contact_email.empty? and element.contact_phone_number.empty? and
-         element.contact_mobile.empty?
+      if (not element.contact_website or element.contact_website.empty?) and 
+         (not element.contact_email or element.contact_email.empty?) and 
+         (not element.contact_phone_number or element.contact_phone_number.empty?) and 
+         (not element.contact_mobile or element.contact_mobile.empty?)
         ''
       else
+        aspect = aspect_model.aspect('contact')
+        locals = {:contact_style_class => aspect.get_aspect_attribute_value('style_class')}        
         renderer = ::UI::FieldSetRender.new('contact', app)
-        renderer.render('view','',{:element => element})
+        renderer.render('view','',locals.merge({:element => element}))
       end
       
     end    
+
+    #
+    # The aspect configuration form
+    #
+    def config(context={}, aspect_model)
+      
+      app = context[:app]
+      template_path = File.expand_path(File.join(File.dirname(__FILE__),'..',
+        'views','contact_aspect_config.erb'))
+      template = Tilt.new(template_path)
+      the_render = template.render(app)    
+                
+    end
 
     # ========= Entity Management extension ========= 
     
