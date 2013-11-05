@@ -1,6 +1,5 @@
 <div class="contact_template <%=contact_style_class%>">
   <div class="content_data_block">
-    <h3 class="content_data_block_title"><%= t.content.content_contact.description %></h3> 
     <% if (element.contact_phone_number and element.contact_phone_number.to_s.strip.length > 0) or (element.contact_mobile and element.contact_mobile.to_s.strip.length > 0) %>  
     <div class="content_data_row"><span data-icon="&#xe009;" aria-hidden="true"><%= "#{element.contact_phone_number} #{element.contact_mobile}" %></span></div>
     <% end %>
